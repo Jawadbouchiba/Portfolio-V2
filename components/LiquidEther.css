@@ -3,11 +3,13 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  background: black; /* 🔥 makes the page background black */
-  overflow: hidden; /* optional, prevents scrollbars */
+  background: black;
+  overflow: auto; /* allow scrolling */
 }
 
+
 .liquid-ether canvas {
+  position: fixed;
   display: block;
   width: 100% !important;
   height: 100% !important;

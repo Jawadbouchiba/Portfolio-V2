@@ -135,17 +135,18 @@ const fadeUp = {
   }),
 };
 
-const sections = ["about", "projects", "skills", "education", "contact"];
+const sections = ["home","about", "projects", "skills", "education", "contact"];
 
 
 export default function Home() {
   return (
+    
     <div
+    
       style={{
-        backgroundColor: "#000",
+        backgroundColor: "#334",
         color: "#fff",
         minHeight: "100vh",
-        overflowX: "hidden",
         scrollBehavior: "smooth",
       }}
     >
@@ -193,6 +194,7 @@ export default function Home() {
             onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })}
           >
             {section.charAt(0).toUpperCase() + section.slice(1)}
+            
           </StarBorder>
         ))}
       </nav>
@@ -254,6 +256,24 @@ export default function Home() {
             textAlign: "center",
           }}
         >
+          <LiquidEther
+        colors={["#27ffa5ff", "#ade60fff", "#f30a0aff"]}
+        mouseForce={20}
+        cursorSize={100}
+        isViscous={false}
+        viscous={30}
+        iterationsViscous={32}
+        iterationsPoisson={32}
+        resolution={0.5}
+        isBounce={false}
+        autoDemo={true}
+        autoSpeed={0.5}
+        autoIntensity={2.2}
+        takeoverDuration={0.25}
+        autoResumeDelay={3000}
+        autoRampDuration={0.6}
+        style={{ width: "100%", height: "100vh", position: "fixed", inset: 0, zIndex: 0 }}
+      />
           <div style={{ maxWidth: 900 }}>
             <motion.h2 variants={fadeUp} custom={0.05} style={{ fontSize: 34, marginBottom: 12 }}>
               À Propos

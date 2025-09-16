@@ -11,15 +11,15 @@ export default function LiquidEther({
   iterationsPoisson = 32,
   dt = 0.014,
   BFECC = true,
-  resolution = 4.5,
+  resolution = 500,
   isBounce = false,
   colors = ['#5227FF', '#FF9FFC', '#B19EEF'],
   style = {},
   className = '',
   autoDemo = true,
-  autoSpeed = 0.5,
+  autoSpeed = 5,
   autoIntensity = 2.2,
-  takeoverDuration = 0.25,
+  takeoverDuration = 0.05,
   autoResumeDelay = 1000,
   autoRampDuration = 0.6
 }) {
@@ -43,7 +43,7 @@ export default function LiquidEther({
           arr = stops;
         }
       } else {
-        arr = ['#ffffff', '#ffffff'];
+        arr = ['#ff0000ff', '#a1ff15ff'];
       }
       const w = arr.length;
       const data = new Uint8Array(w * 4);

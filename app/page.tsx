@@ -1,6 +1,6 @@
 "use client";
 import LiquidEther from "@/components/LiquidEther";
-import ASCIIText from "@/components/ASCIIText";
+import BlurText from "@/components/BlurText";
 
 export default function Home() {
   return (
@@ -35,13 +35,26 @@ export default function Home() {
         style={{ width: "100%", height: "100%" }}
       />
 
-      {/* ASCII animated text */}
-
-    <ASCIIText
-      text='Jawad Bouchiba'
-      enableWaves={true}
-      asciiFontSize={8}
-    />
+      {/* Animated text */}
+      <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          zIndex: 10,
+          color: "white",
+          fontSize: "3rem",
+          fontWeight: "bold",
+        }}
+      >
+        <BlurText
+          text="Jawad Bouchiba"
+          animateBy="words"
+          direction="bottom"
+          onAnimationComplete={() => console.log("Animation complete")}
+        />
+      </div>
     </div>
   );
 }

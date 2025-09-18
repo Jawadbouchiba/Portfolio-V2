@@ -144,7 +144,7 @@ export default function Home() {
     <div
     
       style={{
-        backgroundColor: "#334",
+        backgroundColor: "#000",
         color: "#fff",
         minHeight: "100vh",
         scrollBehavior: "smooth",
@@ -232,7 +232,7 @@ export default function Home() {
       animate={{ opacity: 1, y: 0, transition: { delay: 1.15 } }}
       style={{ marginTop: 16, opacity: 0.85, fontSize: 18 }}
     >
-      Étudiant en informatique — Passionné par le développement logiciel, l’IA et les technologies web.
+      Étudiant en informatique — Passionné par le développement logiciel et l’IA.
     </motion.p>
   </div>
 </section>

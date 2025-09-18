@@ -153,23 +153,30 @@ export default function Home() {
     >
       {/* Liquid background fixed behind everything */}
       <LiquidEther
-        colors={["#27ffa5ff", "#ade60fff", "#f30a0aff"]}
-        mouseForce={20}
-        cursorSize={100}
-        isViscous={false}
-        viscous={30}
-        iterationsViscous={32}
-        iterationsPoisson={32}
-        resolution={0.5}
-        isBounce={false}
-        autoDemo={true}
-        autoSpeed={0.5}
-        autoIntensity={2.2}
-        takeoverDuration={0.25}
-        autoResumeDelay={3000}
-        autoRampDuration={0.6}
-        style={{ width: "100%", height: "100vh", position: "fixed", inset: 0, zIndex: 0 }}
-      />
+  colors={["#27ffa5ff", "#ade60fff", "#f30a0aff"]}
+  mouseForce={20}
+  cursorSize={100}
+  isViscous={false}
+  viscous={30}
+  iterationsViscous={32}
+  iterationsPoisson={32}
+  resolution={0.5}
+  isBounce={false}
+  autoDemo={true}
+  autoSpeed={0.5}
+  autoIntensity={2.2}
+  takeoverDuration={0.25}
+  autoResumeDelay={3000}
+  autoRampDuration={0.6}
+  style={{
+    width: "100%",
+    height: "100vh",
+    position: "fixed",
+    inset: 0,
+    zIndex: 0,
+    pointerEvents: "none", // ✅ empêche de bloquer tes clics
+  }}
+/>
 
       {/* Top centered NavBar */}
       <nav
@@ -210,7 +217,6 @@ export default function Home() {
     alignItems: "center",
     textAlign: "center",
     zIndex: 10,
-    pointerEvents: "none",
   }}
 >
   <div
@@ -257,24 +263,32 @@ export default function Home() {
             textAlign: "center",
           }}
         >
-          <LiquidEther
-        colors={["#27ffa5ff", "#ade60fff", "#f30a0aff"]}
-        mouseForce={20}
-        cursorSize={100}
-        isViscous={false}
-        viscous={30}
-        iterationsViscous={32}
-        iterationsPoisson={32}
-        resolution={0.5}
-        isBounce={false}
-        autoDemo={true}
-        autoSpeed={0.5}
-        autoIntensity={2.2}
-        takeoverDuration={0.25}
-        autoResumeDelay={3000}
-        autoRampDuration={0.6}
-        style={{ width: "100%", height: "100vh", position: "fixed", inset: 0, zIndex: 0 }}
-      />
+         <LiquidEther
+  colors={["#27ffa5ff", "#ade60fff", "#f30a0aff"]}
+  mouseForce={20}
+  cursorSize={100}
+  isViscous={false}
+  viscous={30}
+  iterationsViscous={32}
+  iterationsPoisson={32}
+  resolution={0.5}
+  isBounce={false}
+  autoDemo={true}
+  autoSpeed={0.5}
+  autoIntensity={2.2}
+  takeoverDuration={0.25}
+  autoResumeDelay={3000}
+  autoRampDuration={0.6}
+  style={{
+    width: "100%",
+    height: "100vh",
+    position: "fixed",
+    inset: 0,
+    zIndex: 0,
+    pointerEvents: "none", // ✅ empêche de bloquer tes clics
+  }}
+/>
+
           <div style={{ maxWidth: 900 }}>
             <motion.h2 variants={fadeUp} custom={0.05} style={{ fontSize: 34, marginBottom: 12 }}>
               À Propos
@@ -283,27 +297,43 @@ export default function Home() {
               Étudiant en informatique au Cégep Gérald-Godin. Curieux, analytique et passionné par l’intégration des nouvelles
               technologies et de l’intelligence artificielle dans des projets concrets.
             </motion.p>
-                {/* Liens sociaux avec logos */}
-            <motion.div
-              variants={fadeUp}
-              custom={0.15}
-              style={{ marginTop: 18, display: "flex", gap: 20, justifyContent: "center", alignItems: "center" }}
-            >
-              <a href="https://github.com/mszastro" target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <Github size={20} /> GitHub
-              </a>
-              <a href="mailto:jawad.bouchiba@icloud.com" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <Mail size={20} /> Email
-              </a>
-              <a
-                href="https://www.linkedin.com/in/jawad-bouchiba-a5b771349"
-                target="_blank"
-                rel="noreferrer"
-                style={{ display: "flex", alignItems: "center", gap: 6 }}
-              >
-                <Linkedin size={20} /> LinkedIn
-              </a>
-            </motion.div>
+           {/* Liens sociaux avec logos */}
+<motion.div
+  variants={fadeUp}
+  custom={0.15}
+  style={{
+    marginTop: 18,
+    display: "flex",
+    gap: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  }}
+>
+  <a
+    href="https://github.com/jawadbouchiba"
+    target="_blank"
+    rel="noreferrer"
+    style={{ display: "flex", alignItems: "center", gap: 6 }}
+  >
+    <Github size={20} /> GitHub
+  </a>
+
+  <a
+    href="mailto:jawad.bouchiba@icloud.com"
+    style={{ display: "flex", alignItems: "center", gap: 6 }}
+  >
+    <Mail size={20} /> Email
+  </a>
+
+  <a
+    href="https://www.linkedin.com/in/jawad-bouchiba-a5b771349"
+    target="_blank"
+    rel="noreferrer"
+    style={{ display: "flex", alignItems: "center", gap: 6 }}
+  >
+    <Linkedin size={20} /> LinkedIn
+  </a>
+</motion.div>
           </div>
         </motion.section>
 

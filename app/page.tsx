@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import LiquidEther from "@/components/LiquidEther";
 import BlurText from "@/components/BlurText";
 import { StarBorder } from "@/components/ui/star-border";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 /**
  * Tiny dependency-free TiltCard
@@ -282,15 +283,25 @@ export default function Home() {
               Étudiant en informatique au Cégep Gérald-Godin. Curieux, analytique et passionné par l’intégration des nouvelles
               technologies et de l’intelligence artificielle dans des projets concrets.
             </motion.p>
-            <motion.div variants={fadeUp} custom={0.15} style={{ marginTop: 18, display: "flex", gap: 12, justifyContent: "center" }}>
-              <a href="https://github.com/mszastro  " target="_blank" rel="noreferrer" style={{ opacity: 0.9 }}>
-                GitHub
+                {/* Liens sociaux avec logos */}
+            <motion.div
+              variants={fadeUp}
+              custom={0.15}
+              style={{ marginTop: 18, display: "flex", gap: 20, justifyContent: "center", alignItems: "center" }}
+            >
+              <a href="https://github.com/mszastro" target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <Github size={20} /> GitHub
               </a>
-              <a href="mailto:jawad.bouchiba@icloud.com" style={{ opacity: 0.9 }}>
-                Email
+              <a href="mailto:jawad.bouchiba@icloud.com" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <Mail size={20} /> Email
               </a>
-              <a href="https://www.linkedin.com/in/jawad-bouchiba-a5b771349  " target="_blank" rel="noreferrer" style={{ opacity: 0.9 }}>
-                LinkedIn
+              <a
+                href="https://www.linkedin.com/in/jawad-bouchiba-a5b771349"
+                target="_blank"
+                rel="noreferrer"
+                style={{ display: "flex", alignItems: "center", gap: 6 }}
+              >
+                <Linkedin size={20} /> LinkedIn
               </a>
             </motion.div>
           </div>

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import LiquidEther from "@/components/LiquidEther";
 import BlurText from "@/components/BlurText";
 import { StarBorder } from "@/components/ui/star-border";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail, Code, Globe, Database, Server, Brain, Monitor, Shield, Layers, Box, Smartphone } from "lucide-react";
 
 /**
  * Tiny dependency-free TiltCard
@@ -136,7 +136,17 @@ const fadeUp = {
   }),
 };
 
-const sections = ["home","about", "projects", "skills", "education", "contact"];
+const sections = ["home", "about", "skills", "projects", "education", "personal", "contact"];
+
+const sectionNames = {
+  home: "Accueil",
+  about: "Profil", 
+  projects: "Projets",
+  skills: "Compétences",
+  personal: "Personnel",
+  education: "Formation",
+  contact: "Contact"
+};
 
 
 export default function Home() {
@@ -199,16 +209,17 @@ export default function Home() {
             as="button"
             color="hsla(312, 100%, 50%, 1.00)"
             speed="6s"
+            style={{ minWidth: "100px", textAlign: "center", minHeight: "40px", display: "flex", alignItems: "center", justifyContent: "center" }}
             onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })}
           >
-            {section.charAt(0).toUpperCase() + section.slice(1)}
+            {sectionNames[section as keyof typeof sectionNames]}
             
           </StarBorder>
         ))}
       </nav>
 
 <section
-  id="hero"
+  id="home"
   style={{
     position: "relative",
     minHeight: "100vh",
@@ -290,8 +301,8 @@ export default function Home() {
 />
 
           <div style={{ maxWidth: 900 }}>
-            <motion.h2 variants={fadeUp} custom={0.05} style={{ fontSize: 34, marginBottom: 12 }}>
-              À Propos
+            <motion.h2 variants={fadeUp} custom={0.05} style={{ fontSize: 34, marginBottom: 12, whiteSpace: "nowrap" }}>
+              Profil
             </motion.h2>
             <motion.p variants={fadeUp} custom={0.1} style={{ opacity: 0.9, lineHeight: 1.6 }}>
               Étudiant en informatique au Cégep Gérald-Godin. Curieux, analytique et passionné par l’intégration des nouvelles
@@ -334,6 +345,54 @@ export default function Home() {
     <Linkedin size={20} /> LinkedIn
   </a>
 </motion.div>
+          </div>
+        </motion.section>
+
+        {/* SKILLS */}
+        <motion.section
+          id="skills"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={fadeUp}
+          style={{
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "3rem",
+            gap: 24,
+            flexDirection: "column",
+            textAlign: "center",
+          }}
+        >
+          <h2 style={{ fontSize: 34 }}>Compétences Techniques</h2>
+          <div style={{ display: "flex", gap: 20, flexWrap: "wrap", justifyContent: "center", marginTop: 8 }}>
+            {[
+              { title: "Langages de Programmation", items: ["C#", "Python", "Java", "PHP", "JavaScript", "Bash"], icon: Code },
+              { title: "Développement Web", items: ["HTML", "CSS", "JavaScript", "PHP", "React", "Node.js", "Next.js"], icon: Globe },
+              { title: "Bases de Données", items: ["SQL", "MySQL", "SQL Alchemy", "ORM Python", "Modélisation de données"], icon: Database },
+              { title: "Administration Réseaux", items: ["Configuration de serveurs", "Gestion des infrastructures", "Windows Server", "Linux"], icon: Server },
+              { title: "Intelligence Artificielle", items: ["API Gemini", "Intégration AI dans des projets"], icon: Brain },
+              { title: "Systèmes d'Exploitation", items: ["Windows", "Linux"], icon: Monitor },
+              { title: "Cybersécurité", items: ["Kali Linux", "Tests de pénétration", "Analyse de vulnérabilités", "Outils de sécurité"], icon: Shield },
+              { title: "Frameworks .NET", items: ["ADO.NET", "Razor Pages", "ASP.NET", "Entity Framework"], icon: Layers },
+              { title: "Programmation 3D & Graphismes", items: ["WebGL", "Three.js", "Shaders"], icon: Box },
+              { title: "Développement Mobile", items: ["Kotlin", "React Native", "Swift"], icon: Smartphone },
+            ].map((c) => (
+              <TiltCard key={c.title}>
+                <h3 style={{ marginBottom: 12, fontSize: 18, display: "flex", alignItems: "center", gap: 8 }}>
+                  <c.icon size={20} /> {c.title}
+                </h3>
+                <ul style={{ textAlign: "left", paddingLeft: 20, opacity: 0.9, listStyleType: "disc" }}>
+                  {c.items.map((i) => (
+                    <li key={i} style={{ marginBottom: 8, fontSize: 14 }}>
+                      {i}
+                    </li>
+                  ))}
+                </ul>
+              </TiltCard>
+            ))}
           </div>
         </motion.section>
 
@@ -385,45 +444,6 @@ export default function Home() {
           </div>
         </motion.section>
 
-        {/* SKILLS */}
-        <motion.section
-          id="skills"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={fadeUp}
-          style={{
-            minHeight: "100vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "3rem",
-            gap: 24,
-            flexDirection: "column",
-            textAlign: "center",
-          }}
-        >
-          <h2 style={{ fontSize: 34 }}>Compétences Techniques</h2>
-          <div style={{ display: "flex", gap: 20, flexWrap: "wrap", justifyContent: "center", marginTop: 8 }}>
-            {[
-              { title: "Langages", items: ["C#", "Python", "Java", "PHP", "JavaScript", "HTML", "Bash"] },
-              { title: "Bases de données", items: ["SQL", "MySQL"] },
-              { title: "Réseaux & Sécurité", items: ["Windows Server", "Linux", "Firewall", "VPN"] },
-            ].map((c) => (
-              <TiltCard key={c.title}>
-                <h3 style={{ marginBottom: 8 }}>{c.title}</h3>
-                <ul style={{ textAlign: "left", paddingLeft: 16, opacity: 0.9 }}>
-                  {c.items.map((i) => (
-                    <li key={i} style={{ marginBottom: 6 }}>
-                      {i}
-                    </li>
-                  ))}
-                </ul>
-              </TiltCard>
-            ))}
-          </div>
-        </motion.section>
-
         {/* EDUCATION */}
         <motion.section
           id="education"
@@ -458,6 +478,51 @@ export default function Home() {
               <p style={{ opacity: 0.85 }}>Vaudreuil-Dorion, QC</p>
             </div>
           </TiltCard>
+
+          <TiltCard>
+            <div style={{ textAlign: "center" }}>
+              <p style={{ opacity: 0.75 }}>2025</p>
+              <h3>Stage en informatique</h3>
+              <p style={{ opacity: 0.85 }}>À venir!</p>
+            </div>
+          </TiltCard>
+        </motion.section>
+
+        {/* ATOUTS PERSONNELS */}
+        <motion.section
+          id="personal"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={fadeUp}
+          style={{
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "3rem",
+            gap: 24,
+            flexDirection: "column",
+            textAlign: "center",
+          }}
+        >
+          <h2 style={{ fontSize: 34 }}>Atouts Personnels</h2>
+          <div style={{ display: "flex", gap: 20, flexWrap: "wrap", justifyContent: "center", marginTop: 8 }}>
+            {[
+              { title: "Qualités Personnelles", items: ["Curieux et en constante amélioration", "Esprit analytique et logique", "Capacité à résoudre des problèmes complexes", "Esprit d'équipe et collaboration efficace"] },
+            ].map((c) => (
+              <TiltCard key={c.title}>
+                <h3 style={{ marginBottom: 12, fontSize: 18, fontWeight: "bold" }}>{c.title}</h3>
+                <ul style={{ textAlign: "left", paddingLeft: 20, opacity: 0.9, listStyleType: "disc" }}>
+                  {c.items.map((i) => (
+                    <li key={i} style={{ marginBottom: 8, fontSize: 14 }}>
+                      {i}
+                    </li>
+                  ))}
+                </ul>
+              </TiltCard>
+            ))}
+          </div>
         </motion.section>
 
         {/* CONTACT */}

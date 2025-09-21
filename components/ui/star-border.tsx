@@ -34,6 +34,10 @@ export function StarBorder<T extends ElementType = "button">({
         overflow: "hidden",
         transition: "all 0.3s ease",
         fontWeight: 500,
+        fontSize: "clamp(0.8rem, 2.5vw, 1rem)", // Responsive font size
+        padding: "clamp(0.4rem, 2vw, 0.5rem) clamp(1rem, 5vw, 1.5rem)", // Responsive padding
+        maxWidth: "90%", // Ensure buttons don't take the full width on mobile
+        width: "auto", // Allow buttons to size dynamically
       }}
       onMouseEnter={(e) => {
         const target = e.currentTarget

@@ -1,11 +1,303 @@
 "use client";
 
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useState } from "react";
 import { motion } from "framer-motion";
 import LiquidEther from "@/components/LiquidEther";
 import BlurText from "@/components/BlurText";
 import { StarBorder } from "@/components/ui/star-border";
-import { Github, Linkedin, Mail, Code, Globe, Database, Server, Brain, Monitor, Shield, Layers, Box, Smartphone } from "lucide-react";
+import { Github, Linkedin, Mail, Code, Globe, Database, Server, Brain, Monitor, Shield, Layers, Box, Smartphone, Languages } from "lucide-react";
+
+// Translation objects
+interface Translation {
+  home: string;
+  about: string;
+  projects: string;
+  skills: string;
+  personal: string;
+  education: string;
+  contact: string;
+  name: string;
+  tagline: string;
+  aboutTitle: string;
+  aboutDesc: string;
+  github: string;
+  email: string;
+  linkedin: string;
+  skillsTitle: string;
+  projectsTitle: string;
+  educationTitle: string;
+  personalTitle: string;
+  contactTitle: string;
+  contactText: string;
+  postAIInvesting: { desc: string };
+  hyperliquidTracker: { desc: string };
+  audUsdAnalyzer: { desc: string };
+  thresaurus: { desc: string };
+  appleMediaConverter: { desc: string };
+  mediatheque: { desc: string };
+  invoiceGenerator: { desc: string };
+  secondaryDiploma: string;
+  computerProgram: string;
+  aiCertification: string;
+  internship: string;
+  comingSoon: string;
+  personalQualities: string;
+  qualities: string[];
+  programmingLanguages: string;
+  webDevelopment: string;
+  databases: string;
+  networkAdministration: string;
+  artificialIntelligence: string;
+  operatingSystems: string;
+  cybersecurity: string;
+  dotnetFrameworks: string;
+  graphics3d: string;
+  mobileDevelopment: string;
+  csharp: string;
+  python: string;
+  java: string;
+  php: string;
+  javascript: string;
+  bash: string;
+  html: string;
+  css: string;
+  react: string;
+  nodejs: string;
+  nextjs: string;
+  sql: string;
+  mysql: string;
+  sqlAlchemy: string;
+  ormPython: string;
+  dataModeling: string;
+  serverConfig: string;
+  infrastructureManagement: string;
+  windowsServer: string;
+  windows: string;
+  linux: string;
+  kaliLinux: string;
+  geminiApi: string;
+  aiIntegration: string;
+  penetrationTesting: string;
+  vulnerabilityAnalysis: string;
+  securityTools: string;
+  adoNet: string;
+  razorPages: string;
+  aspNet: string;
+  entityFramework: string;
+  webgl: string;
+  threeJs: string;
+  shaders: string;
+  kotlin: string;
+  reactNative: string;
+  swift: string;
+}
+
+const translations: Record<'fr' | 'en', Translation> = {
+  fr: {
+    home: "Accueil",
+    about: "Profil", 
+    projects: "Projets",
+    skills: "Compétences",
+    personal: "Personnel",
+    education: "Formation",
+    contact: "Contact",
+    name: "Jawad Bouchiba",
+    tagline: "Étudiant en informatique — Passionné par le développement logiciel et l’IA.",
+    aboutTitle: "Profil",
+    aboutDesc: "Étudiant en informatique au Cégep Gérald-Godin. Curieux, analytique et passionné par l'intégration des nouvelles technologies et de l'intelligence artificielle dans des projets concrets.",
+    github: "GitHub",
+    email: "Email",
+    linkedin: "LinkedIn",
+    skillsTitle: "Compétences Techniques",
+    projectsTitle: "Projets Récents",
+    educationTitle: "Formation",
+    personalTitle: "Atouts Personnels",
+    contactTitle: "Me Contacter",
+    contactText: "Parlons ensemble 👋",
+    // Projects
+    postAIInvesting: {
+      desc: "Plateforme d'investissement intelligent analysant les actualités financières en temps réel via News API et Gemini AI."
+    },
+    hyperliquidTracker: {
+      desc: "Solution de tracking blockchain pour analyser les transactions des gros investisseurs sur Hyperliquid."
+    },
+    audUsdAnalyzer: {
+      desc: "Analyseur du trading pair AUD-USD utilisant pandas pour analyser les données historiques et identifier des conditions optimales afin d'améliorer le taux de réussite des trades."
+    },
+    thresaurus: {
+      desc: "Jeu Unity où le joueur doit naviguer dans un labyrinthe pour trouver tous les trésors malgré les obstacles. Comprend 10 niveaux avec gameplay engageant."
+    },
+    appleMediaConverter: {
+      desc: "Site web HTML/JavaScript utilisant ffmpeg pour convertir les formats média Apple (HEIC, MOV) vers des formats compatibles Windows (JPG, MP4)."
+    },
+    mediatheque: {
+      desc: "Système de bibliothèque complet en Java avec JavaFX permettant l'échange et le retrait de livres, la création de comptes, les modifications et les propositions clients. Interface utilisateur complète avec base de données locale."
+    },
+    invoiceGenerator: {
+      desc: "Plateforme SaaS en développement pour générer des factures professionnelles en ligne. Permet la création, personnalisation et gestion de factures avec interface moderne et fonctionnalités avancées."
+    },
+    // Education
+    secondaryDiploma: "Diplôme d'éducation secondaire — École Cité-des-Jeunes",
+    computerProgram: "Technique Informatique — Cégep Gérald-Godin",
+    aiCertification: "Certification AI Fluency: Framework & Foundations",
+    internship: "Stage en informatique",
+    comingSoon: "À venir!",
+    // Personal qualities
+    personalQualities: "Qualités Personnelles",
+    qualities: ["Curieux et en constante amélioration", "Esprit analytique et logique", "Capacité à résoudre des problèmes complexes", "Esprit d'équipe et collaboration efficace"],
+    // Skills categories
+    programmingLanguages: "Langages de Programmation",
+    webDevelopment: "Développement Web",
+    databases: "Bases de Données", 
+    networkAdministration: "Administration Réseaux",
+    artificialIntelligence: "Intelligence Artificielle",
+    operatingSystems: "Systèmes d'Exploitation",
+    cybersecurity: "Cybersécurité",
+    dotnetFrameworks: "Frameworks .NET",
+    graphics3d: "Programmation 3D & Graphismes",
+    mobileDevelopment: "Développement Mobile",
+    // Individual skill items
+    csharp: "C#",
+    python: "Python",
+    java: "Java",
+    php: "PHP",
+    javascript: "JavaScript",
+    bash: "Bash",
+    html: "HTML",
+    css: "CSS",
+    react: "React",
+    nodejs: "Node.js",
+    nextjs: "Next.js",
+    sql: "SQL",
+    mysql: "MySQL",
+    sqlAlchemy: "SQL Alchemy",
+    ormPython: "ORM Python",
+    dataModeling: "Modélisation de données",
+    serverConfig: "Configuration de serveurs",
+    infrastructureManagement: "Gestion des infrastructures",
+    windowsServer: "Windows Server",
+    windows: "Windows",
+    linux: "Linux",
+    kaliLinux: "Kali Linux",
+    geminiApi: "API Gemini",
+    aiIntegration: "Intégration AI",
+    penetrationTesting: "Tests de pénétration",
+    vulnerabilityAnalysis: "Analyse de vulnérabilités",
+    securityTools: "Outils de sécurité",
+    adoNet: "ADO.NET",
+    razorPages: "Razor Pages",
+    aspNet: "ASP.NET",
+    entityFramework: "Entity Framework",
+    webgl: "WebGL",
+    threeJs: "Three.js",
+    shaders: "Shaders",
+    kotlin: "Kotlin",
+    reactNative: "React Native",
+    swift: "Swift"
+  },
+  en: {
+    home: "Home",
+    about: "Profile", 
+    projects: "Projects",
+    skills: "Skills",
+    personal: "Personal",
+    education: "Education",
+    contact: "Contact",
+    name: "Jawad Bouchiba",
+    tagline: "Computer Science Student — Passionate about software development and AI.",
+    aboutTitle: "Profile",
+    aboutDesc: "Computer science student at Cégep Gérald-Godin. Curious, analytical and passionate about integrating new technologies and artificial intelligence into concrete projects.",
+    github: "GitHub",
+    email: "Email",
+    linkedin: "LinkedIn",
+    skillsTitle: "Technical Skills",
+    projectsTitle: "Recent Projects",
+    educationTitle: "Education",
+    personalTitle: "Personal Strengths",
+    contactTitle: "Contact Me",
+    contactText: "Let's talk 👋",
+    // Projects
+    postAIInvesting: {
+      desc: "Intelligent investment platform analyzing financial news in real-time via News API and Gemini AI."
+    },
+    hyperliquidTracker: {
+      desc: "Blockchain tracking solution to analyze transactions of major investors on Hyperliquid."
+    },
+    audUsdAnalyzer: {
+      desc: "AUD-USD trading pair analyzer using pandas to analyze historical data and identify optimal conditions to improve trade success rate."
+    },
+    thresaurus: {
+      desc: "Unity game where the player must navigate through a labyrinth to find all treasures despite obstacles. Includes 10 levels with engaging gameplay."
+    },
+    appleMediaConverter: {
+      desc: "HTML/JavaScript website using ffmpeg to convert Apple media formats (HEIC, MOV) to Windows compatible formats (JPG, MP4)."
+    },
+    mediatheque: {
+      desc: "Complete library system in Java with JavaFX allowing book exchange and withdrawal, account creation, modifications and client proposals. Complete user interface with local database."
+    },
+    invoiceGenerator: {
+      desc: "SaaS platform in development for generating professional invoices online. Allows creation, customization and management of invoices with modern interface and advanced features."
+    },
+    // Education
+    secondaryDiploma: "Secondary Education Diploma — École Cité-des-Jeunes",
+    computerProgram: "Computer Science Program — Cégep Gérald-Godin",
+    aiCertification: "AI Fluency Certification: Framework & Foundations",
+    internship: "Computer Science Internship",
+    comingSoon: "Coming Soon!",
+    // Personal qualities
+    personalQualities: "Personal Qualities",
+    qualities: ["Curious and constantly improving", "Analytical and logical mind", "Ability to solve complex problems", "Effective teamwork and collaboration"],
+    // Skills categories
+    programmingLanguages: "Programming Languages",
+    webDevelopment: "Web Development",
+    databases: "Databases", 
+    networkAdministration: "Network Administration",
+    artificialIntelligence: "Artificial Intelligence",
+    operatingSystems: "Operating Systems",
+    cybersecurity: "Cybersecurity",
+    dotnetFrameworks: ".NET Frameworks",
+    graphics3d: "3D Graphics & Programming",
+    mobileDevelopment: "Mobile Development",
+    // Individual skill items
+    csharp: "C#",
+    python: "Python",
+    java: "Java",
+    php: "PHP",
+    javascript: "JavaScript",
+    bash: "Bash",
+    html: "HTML",
+    css: "CSS",
+    react: "React",
+    nodejs: "Node.js",
+    nextjs: "Next.js",
+    sql: "SQL",
+    mysql: "MySQL",
+    sqlAlchemy: "SQL Alchemy",
+    ormPython: "Python ORM",
+    dataModeling: "Data Modeling",
+    serverConfig: "Server Configuration",
+    infrastructureManagement: "Infrastructure Management",
+    windowsServer: "Windows Server",
+    windows: "Windows",
+    linux: "Linux",
+    kaliLinux: "Kali Linux",
+    geminiApi: "Gemini API",
+    aiIntegration: "AI Integration",
+    penetrationTesting: "Penetration Testing",
+    vulnerabilityAnalysis: "Vulnerability Analysis",
+    securityTools: "Security Tools",
+    adoNet: "ADO.NET",
+    razorPages: "Razor Pages",
+    aspNet: "ASP.NET",
+    entityFramework: "Entity Framework",
+    webgl: "WebGL",
+    threeJs: "Three.js",
+    shaders: "Shaders",
+    kotlin: "Kotlin",
+    reactNative: "React Native",
+    swift: "Swift"
+  }
+};
 
 /**
  * Tiny dependency-free TiltCard
@@ -150,6 +442,26 @@ const sectionNames = {
 
 
 export default function Home() {
+  const [language, setLanguage] = useState<'fr' | 'en'>('fr');
+
+  const toggleLanguage = () => {
+    setLanguage(prev => prev === 'fr' ? 'en' : 'fr');
+  };
+
+  const t = translations[language];
+  const sectionLabels = {
+    fr: sectionNames,
+    en: {
+      home: "Home",
+      about: "Profile", 
+      projects: "Projects",
+      skills: "Skills",
+      personal: "Personal",
+      education: "Education",
+      contact: "Contact"
+    }
+  };
+
   return (
     
     <div
@@ -212,10 +524,21 @@ export default function Home() {
             style={{ minWidth: "100px", textAlign: "center", minHeight: "40px", display: "flex", alignItems: "center", justifyContent: "center" }}
             onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })}
           >
-            {sectionNames[section as keyof typeof sectionNames]}
+            {sectionLabels[language][section as keyof typeof sectionLabels.fr]}
             
           </StarBorder>
         ))}
+        {/* Translate Button */}
+        <StarBorder
+          as="button"
+          color="hsla(312, 100%, 50%, 1.00)"
+          speed="6s"
+          style={{ minWidth: "120px", textAlign: "center", minHeight: "40px", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}
+          onClick={toggleLanguage}
+        >
+          <Languages size={16} />
+          {language === 'fr' ? 'EN' : 'FR'}
+        </StarBorder>
       </nav>
 
 <section
@@ -240,7 +563,7 @@ export default function Home() {
     }}
   >
     <BlurText
-      text="Jawad Bouchiba"
+      text={t.name}
       animateBy="words"
       direction="top"
       // remove style prop from BlurText; wrapping div handles size
@@ -250,7 +573,7 @@ export default function Home() {
       animate={{ opacity: 1, y: 0, transition: { delay: 1.15 } }}
       style={{ marginTop: 16, opacity: 0.85, fontSize: 18 }}
     >
-      Étudiant en informatique — Passionné par le développement logiciel et l’IA.
+      {t.tagline}
     </motion.p>
   </div>
 </section>
@@ -302,11 +625,10 @@ export default function Home() {
 
           <div style={{ maxWidth: 900 }}>
             <motion.h2 variants={fadeUp} custom={0.05} style={{ fontSize: 34, marginBottom: 12, whiteSpace: "nowrap" }}>
-              Profil
+              {t.aboutTitle}
             </motion.h2>
             <motion.p variants={fadeUp} custom={0.1} style={{ opacity: 0.9, lineHeight: 1.6 }}>
-              Étudiant en informatique au Cégep Gérald-Godin. Curieux, analytique et passionné par l’intégration des nouvelles
-              technologies et de l’intelligence artificielle dans des projets concrets.
+              {t.aboutDesc}
             </motion.p>
            {/* Liens sociaux avec logos */}
 <motion.div
@@ -326,14 +648,14 @@ export default function Home() {
     rel="noreferrer"
     style={{ display: "flex", alignItems: "center", gap: 6 }}
   >
-    <Github size={20} /> GitHub
+    <Github size={20} /> {t.github}
   </a>
 
   <a
     href="mailto:jawad.bouchiba@icloud.com"
     style={{ display: "flex", alignItems: "center", gap: 6 }}
   >
-    <Mail size={20} /> Email
+    <Mail size={20} /> {t.email}
   </a>
 
   <a
@@ -342,7 +664,7 @@ export default function Home() {
     rel="noreferrer"
     style={{ display: "flex", alignItems: "center", gap: 6 }}
   >
-    <Linkedin size={20} /> LinkedIn
+    <Linkedin size={20} /> {t.linkedin}
   </a>
 </motion.div>
           </div>
@@ -366,19 +688,19 @@ export default function Home() {
             textAlign: "center",
           }}
         >
-          <h2 style={{ fontSize: 34 }}>Compétences Techniques</h2>
+          <h2 style={{ fontSize: 34 }}>{t.skillsTitle}</h2>
           <div style={{ display: "flex", gap: 20, flexWrap: "wrap", justifyContent: "center", marginTop: 8 }}>
             {[
-              { title: "Langages de Programmation", items: ["C#", "Python", "Java", "PHP", "JavaScript", "Bash"], icon: Code },
-              { title: "Développement Web", items: ["HTML", "CSS", "JavaScript", "PHP", "React", "Node.js", "Next.js"], icon: Globe },
-              { title: "Bases de Données", items: ["SQL", "MySQL", "SQL Alchemy", "ORM Python", "Modélisation de données"], icon: Database },
-              { title: "Administration Réseaux", items: ["Configuration de serveurs", "Gestion des infrastructures", "Windows Server", "Linux"], icon: Server },
-              { title: "Intelligence Artificielle", items: ["API Gemini", "Intégration AI dans des projets"], icon: Brain },
-              { title: "Systèmes d'Exploitation", items: ["Windows", "Linux"], icon: Monitor },
-              { title: "Cybersécurité", items: ["Kali Linux", "Tests de pénétration", "Analyse de vulnérabilités", "Outils de sécurité"], icon: Shield },
-              { title: "Frameworks .NET", items: ["ADO.NET", "Razor Pages", "ASP.NET", "Entity Framework"], icon: Layers },
-              { title: "Programmation 3D & Graphismes", items: ["WebGL", "Three.js", "Shaders"], icon: Box },
-              { title: "Développement Mobile", items: ["Kotlin", "React Native", "Swift"], icon: Smartphone },
+              { title: t.programmingLanguages, items: [t.csharp, t.python, t.java, t.php, t.javascript, t.bash], icon: Code },
+              { title: t.webDevelopment, items: [t.html, t.css, t.javascript, t.php, t.react, t.nodejs, t.nextjs], icon: Globe },
+              { title: t.databases, items: [t.sql, t.mysql, t.sqlAlchemy, t.ormPython, t.dataModeling], icon: Database },
+              { title: t.networkAdministration, items: [t.serverConfig, t.infrastructureManagement, t.windowsServer, t.linux], icon: Server },
+              { title: t.artificialIntelligence, items: [t.geminiApi, t.aiIntegration], icon: Brain },
+              { title: t.operatingSystems, items: [t.windows, t.linux], icon: Monitor },
+              { title: t.cybersecurity, items: [t.kaliLinux, t.penetrationTesting, t.vulnerabilityAnalysis, t.securityTools], icon: Shield },
+              { title: t.dotnetFrameworks, items: [t.adoNet, t.razorPages, t.aspNet, t.entityFramework], icon: Layers },
+              { title: t.graphics3d, items: [t.webgl, t.threeJs, t.shaders], icon: Box },
+              { title: t.mobileDevelopment, items: [t.kotlin, t.reactNative, t.swift], icon: Smartphone },
             ].map((c) => (
               <TiltCard key={c.title}>
                 <h3 style={{ marginBottom: 12, fontSize: 18, display: "flex", alignItems: "center", gap: 8 }}>
@@ -414,19 +736,44 @@ export default function Home() {
             flexDirection: "column",
           }}
         >
-          <h2 style={{ fontSize: 34 }}>Projets Récents</h2>
+          <h2 style={{ fontSize: 34 }}>{t.projectsTitle}</h2>
 
           <div style={{ display: "flex", gap: 20, flexWrap: "wrap", justifyContent: "center", marginTop: 10 }}>
             {[
               {
                 title: "PostAIInvesting",
-                desc: "Plateforme d'investissement intelligent analysant les actualités financières en temps réel via News API et Gemini AI.",
+                desc: t.postAIInvesting.desc,
                 tech: ["News API", "Gemini AI", "React", "Node.js"],
               },
               {
                 title: "Hyperliquid Whale Tracker",
-                desc: "Solution de tracking blockchain pour analyser les transactions des gros investisseurs sur Hyperliquid.",
-                tech: ["Hyperliquid API", "Blockchain", "Python", "HTML", "JavaScript"],
+                desc: t.hyperliquidTracker.desc,
+                tech: ["Hyperliquid API", "Blockchain", "HTML", "JavaScript"],
+              },
+              {
+                title: "AUD-USD Analyzer",
+                desc: t.audUsdAnalyzer.desc,
+                tech: ["Python", "Pandas", "Analyse de données", "Trading"],
+              },
+              {
+                title: "Thresaurus",
+                desc: t.thresaurus.desc,
+                tech: ["Unity", "C#", "Game Development", "3D"],
+              },
+              {
+                title: "Apple Media Converter",
+                desc: t.appleMediaConverter.desc,
+                tech: ["HTML", "JavaScript", "FFmpeg", "Media Conversion"],
+              },
+              {
+                title: "Médiathèque",
+                desc: t.mediatheque.desc,
+                tech: ["Java", "JavaFX", "Base de données", "Interface utilisateur"],
+              },
+              {
+                title: "SaaS Générateur de Factures en Ligne       (En développement)",
+                desc: t.invoiceGenerator.desc,
+                tech: ["React", "Node.js", "MongoDB", "SaaS"],
               },
             ].map((p) => (
               <TiltCard key={p.title}>
@@ -462,28 +809,36 @@ export default function Home() {
             textAlign: "center",
           }}
         >
-          <h2 style={{ fontSize: 34 }}>Formation</h2>
-          <TiltCard>
-            <div style={{ textAlign: "center" }}>
-              <p style={{ opacity: 0.75 }}>2023 - Présent</p>
-              <h3>Technique Informatique — Cégep Gérald-Godin</h3>
-              <p style={{ opacity: 0.85 }}>Ste.-Geneviève, QC</p>
-            </div>
-          </TiltCard>
-
+          <h2 style={{ fontSize: 34 }}>{t.educationTitle}</h2>
           <TiltCard>
             <div style={{ textAlign: "center" }}>
               <p style={{ opacity: 0.75 }}>2018 - 2023</p>
-              <h3>Diplôme d'éducation secondaire — École Cité-des-Jeunes</h3>
+              <h3>{t.secondaryDiploma}</h3>
               <p style={{ opacity: 0.85 }}>Vaudreuil-Dorion, QC</p>
             </div>
           </TiltCard>
 
           <TiltCard>
             <div style={{ textAlign: "center" }}>
+              <p style={{ opacity: 0.75 }}>2023 - Présent</p>
+              <h3>{t.computerProgram}</h3>
+              <p style={{ opacity: 0.85 }}>Ste.-Geneviève, QC</p>
+            </div>
+          </TiltCard>
+
+          <TiltCard>
+            <div style={{ textAlign: "center" }}>
               <p style={{ opacity: 0.75 }}>2025</p>
-              <h3>Stage en informatique</h3>
-              <p style={{ opacity: 0.85 }}>À venir!</p>
+              <h3>{t.aiCertification}</h3>
+              <p style={{ opacity: 0.85 }}>Anthropic</p>
+            </div>
+          </TiltCard>
+
+          <TiltCard>
+            <div style={{ textAlign: "center" }}>
+              <p style={{ opacity: 0.75 }}>2026</p>
+              <h3>{t.internship}</h3>
+              <p style={{ opacity: 0.85 }}>{t.comingSoon}</p>
             </div>
           </TiltCard>
         </motion.section>
@@ -506,10 +861,10 @@ export default function Home() {
             textAlign: "center",
           }}
         >
-          <h2 style={{ fontSize: 34 }}>Atouts Personnels</h2>
+          <h2 style={{ fontSize: 34 }}>{t.personalTitle}</h2>
           <div style={{ display: "flex", gap: 20, flexWrap: "wrap", justifyContent: "center", marginTop: 8 }}>
             {[
-              { title: "Qualités Personnelles", items: ["Curieux et en constante amélioration", "Esprit analytique et logique", "Capacité à résoudre des problèmes complexes", "Esprit d'équipe et collaboration efficace"] },
+              { title: t.personalQualities, items: t.qualities },
             ].map((c) => (
               <TiltCard key={c.title}>
                 <h3 style={{ marginBottom: 12, fontSize: 18, fontWeight: "bold" }}>{c.title}</h3>
@@ -542,10 +897,10 @@ export default function Home() {
             flexDirection: "column",
           }}
         >
-          <h2 style={{ fontSize: 34 }}>Me Contacter</h2>
+          <h2 style={{ fontSize: 34 }}>{t.contactTitle}</h2>
           <TiltCard>
             <div style={{ textAlign: "center" }}>
-              <h3>Parlons ensemble 👋</h3>
+              <h3>{t.contactText}</h3>
               <a href="mailto:jawad.bouchiba@icloud.com" style={{ textDecoration: "underline", color: "inherit" }}>
                 jawad.bouchiba@icloud.com
               </a>
